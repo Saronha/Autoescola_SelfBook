@@ -19,11 +19,8 @@ A marcação depende de uma pessoa intermédia, de duas formas:
 - Troca de e-mails sucessivos até se encontrar um horário que sirva às duas partes.
 
 - Custos de pessoal em tarefas que se podem automatizar.
-  
 
-> Medir o custo:
-
-Um aluno tem que marcar aulas com frequência e muitas de uma vez. A depender da quantidade de aulas à marcar, o processo pode levar de 3 a 10 minutos
+> Um aluno tem que marcar aulas com frequência e muitas de uma vez. A depender da quantidade de aulas à marcar, o processo pode levar de 3 a 10 minutos
   
 ## Prova: conversa com utilizadores reais
 
@@ -36,4 +33,3 @@ Entrevista com o Dono da Escola de condução:
 | 3. Quanto tempo perdes? | "Só a marcar aulas? As meninas da recepção passam o dia todo a fazer isso para todos os alunos. Alguns são mais enrolados que outros e acabam por demorar bem mais. Já aconteceu de passarmos 10 minutos a espera de que o aluno fosse à agenda dele, visse o horário de trabalho, fizesse algumas ligações para saber se poderia marcar a aula naquele dia. Os alunos não sabem quais dias que tem disponíveis e isso atrasa muito o processo."|
 | 4. O que usas para isso? (papel, Excel, WhatsApp...)| "Os horários dos professores são consultados numa tabela do Excel, e as aulas são marcadas em outra tabela." |
 | 5. O que mudarias?| "Acho que é um trabalho que não precisa de um intermédio humano, poderia ser totalmente automatizado"|
-|                   |              |
