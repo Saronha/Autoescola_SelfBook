@@ -1,0 +1,1 @@
+A ligação do prototipo Lovable foi compartilhado com o email do professor 
