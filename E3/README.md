@@ -6,7 +6,7 @@ O *SelfBook* é um sistema gestor de horários de aulas para escolas de conduç�
 
 - A escola de condução tem 3 **UNIDADES** de ensino em diferentes localidades. Cada unidade é identificada por seu ID, nome, e-mail e telefone (para o nosso sistema não importa guardar o endereço).
 
-- A escola dispõe de carros e cada **CARRO** está associado à um único INSTRUTOR por vez. dos carros importa guardar seu ID, número de matrícula, data da primeira matrícula, marca, data da última inspeção e disponibilidade (pode ser que tenham carros sem instrutores);
+- A escola dispõe de carros e cada **CARRO** está associado à um único INSTRUTOR por vez. dos carros importa guardar seu ID, número de matrícula, marca e disponibilidade (pode ser que tenham carros sem instrutores);
 
 - Cada **INSTRUTOR** está associado à uma única unidade de ensino por vez. Do instrutor importa guardar seu próprio ID, o nome, número de documento, a data de admissão, a unidade de ensino e o carro associados à ele (pode ser que existam instrutores sem carro), se está trabalhando (T), de férias (F) ou baixa médica (BM);
 
@@ -63,3 +63,13 @@ Escolhemos por não represenhar a entidade UTILIZADOR no modelo conceptual, pois
 9- O admin deve conseguir visulaizar e modificar a escala te todos os instrutores, separados por unidades de ensino.
 
 10- O admin deve alterar o horário dos instrutores com no mínimo 24h de antecedencia.
+
+# MUDAR RELACIONAMENTO ENTRE USUARIO, ALUNO E ADMIN!!
+
+4. Pode existir um utilizador sem aluno nem admin. A regra diz “nunca vai existir um utilizador que não está associado a um aluno ou a um admin”. Com a estrutura atual, o MySQL não consegue garantir isso, porque a FK aponta de aluno/admin para utilizador e não o contrário. A solução limpa é inverter a ligação:
+
+utilizador passa a ter id_aluno INT NULL UNIQUE e id_admin INT NULL UNIQUE, com FKs para aluno e admin.
+Junta CHECK ((id_aluno IS NULL) <> (id_admin IS NULL)), para ter exatamente um dos dois.
+Deixam de ser precisos tipo_utilizador e os id_tipo_utilizador em aluno/admin.
+
+Assim também fica garantido que um aluno não tem permissões de admin e vice-versa. Se preferires manter a estrutura atual, tens de documentar que essa regra fica a cargo da aplicação.
