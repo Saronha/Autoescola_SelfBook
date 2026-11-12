@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `selfbook` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `selfbook`;
 -- MySQL dump 10.13  Distrib 8.0.45, for Win64 (x86_64)
 --
 -- Host: localhost    Database: selfbook
@@ -16,26 +18,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `admin`
---
-
-DROP TABLE IF EXISTS `admin`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `admin` (
-  `id_admin` int NOT NULL AUTO_INCREMENT,
-  `nome_admin` varchar(100) NOT NULL,
-  `id_utilizador` int NOT NULL,
-  `id_tipo_utilizador` int NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id_admin`),
-  UNIQUE KEY `uq_admin_utilizador` (`id_utilizador`),
-  KEY `fk_admin_utilizador_tipo` (`id_utilizador`,`id_tipo_utilizador`),
-  CONSTRAINT `fk_admin_utilizador_tipo` FOREIGN KEY (`id_utilizador`, `id_tipo_utilizador`) REFERENCES `utilizador` (`id_utilizador`, `id_tipo_utilizador`),
-  CONSTRAINT `ck_admin_tipo` CHECK ((`id_tipo_utilizador` = 1))
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `aluno`
 --
 
@@ -47,14 +29,8 @@ CREATE TABLE `aluno` (
   `nome_aluno` varchar(100) NOT NULL,
   `documento_aluno` varchar(20) NOT NULL,
   `data_inscricao` date DEFAULT (curdate()),
-  `id_utilizador` int NOT NULL,
-  `id_tipo_utilizador` int NOT NULL DEFAULT '2',
   PRIMARY KEY (`id_aluno`),
-  UNIQUE KEY `uq_aluno_utilizador` (`id_utilizador`),
-  UNIQUE KEY `uq_aluno_documento` (`documento_aluno`),
-  KEY `fk_aluno_utilizador_tipo` (`id_utilizador`,`id_tipo_utilizador`),
-  CONSTRAINT `fk_aluno_utilizador_tipo` FOREIGN KEY (`id_utilizador`, `id_tipo_utilizador`) REFERENCES `utilizador` (`id_utilizador`, `id_tipo_utilizador`),
-  CONSTRAINT `ck_aluno_tipo` CHECK ((`id_tipo_utilizador` = 2))
+  UNIQUE KEY `uq_aluno_documento` (`documento_aluno`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -108,14 +84,11 @@ CREATE TABLE `escala` (
   `data_escala` date NOT NULL,
   `id_instrutor` int NOT NULL,
   `id_turno` int NOT NULL,
-  `id_admin` int NOT NULL,
   PRIMARY KEY (`id_escala`),
   UNIQUE KEY `uq_escala_instrutor_dia` (`id_instrutor`,`data_escala`),
   KEY `id_turno` (`id_turno`),
-  KEY `id_admin` (`id_admin`),
   CONSTRAINT `escala_ibfk_1` FOREIGN KEY (`id_instrutor`) REFERENCES `instrutor` (`id_instrutor`),
-  CONSTRAINT `escala_ibfk_2` FOREIGN KEY (`id_turno`) REFERENCES `turno` (`id_turno`),
-  CONSTRAINT `escala_ibfk_3` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`)
+  CONSTRAINT `escala_ibfk_2` FOREIGN KEY (`id_turno`) REFERENCES `turno` (`id_turno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -141,21 +114,6 @@ CREATE TABLE `instrutor` (
   CONSTRAINT `fk_instrutor_unidade` FOREIGN KEY (`id_unidade`) REFERENCES `unidade_ensino` (`id_unidade`),
   CONSTRAINT `instrutor_ibfk_2` FOREIGN KEY (`id_carro`) REFERENCES `carro` (`id_carro`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `tipo_utilizador`
---
-
-DROP TABLE IF EXISTS `tipo_utilizador`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `tipo_utilizador` (
-  `id_tipo_utilizador` int NOT NULL AUTO_INCREMENT,
-  `descricao_utilizador` varchar(25) NOT NULL,
-  PRIMARY KEY (`id_tipo_utilizador`),
-  UNIQUE KEY `descricao_utilizador` (`descricao_utilizador`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -203,14 +161,14 @@ CREATE TABLE `utilizador` (
   `id_utilizador` int NOT NULL AUTO_INCREMENT,
   `email_utilizador` varchar(150) NOT NULL,
   `senha_hash` varchar(255) NOT NULL,
-  `id_tipo_utilizador` int NOT NULL,
   `ativo` tinyint(1) NOT NULL DEFAULT '1',
   `criado_em` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `id_aluno` int NOT NULL,
   PRIMARY KEY (`id_utilizador`),
   UNIQUE KEY `email_utilizador` (`email_utilizador`),
-  UNIQUE KEY `uq_utilizador_tipo` (`id_utilizador`,`id_tipo_utilizador`),
-  KEY `id_tipo_utilizador` (`id_tipo_utilizador`),
-  CONSTRAINT `utilizador_ibfk_1` FOREIGN KEY (`id_tipo_utilizador`) REFERENCES `tipo_utilizador` (`id_tipo_utilizador`)
+  UNIQUE KEY `uq_utilizador_tipo` (`id_utilizador`),
+  KEY `fk_aluno_utilizador` (`id_aluno`),
+  CONSTRAINT `fk_aluno_utilizador` FOREIGN KEY (`id_aluno`) REFERENCES `aluno` (`id_aluno`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -223,4 +181,4 @@ CREATE TABLE `utilizador` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-11-08 15:15:11
+-- Dump completed on 2026-11-12 20:41:56

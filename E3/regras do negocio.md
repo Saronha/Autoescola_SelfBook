@@ -69,7 +69,7 @@ Entretanto, depois de pedirmos aconselhamento do professor,decidimos por omitir 
 
 # MUDAR RELACIONAMENTO ENTRE USUARIO E ALUNO!!
 
-4. Atualmente ode existir um utilizador sem aluno. A regra diz “nunca vai existir um utilizador que não está associado a um aluno”. Com a estrutura atual, o MySQL não consegue garantir isso, porque a FK aponta de aluno para utilizador e não o contrário. A solução limpa é inverter a ligação:
+4. Atualmente pode existir um utilizador sem aluno. A regra diz “nunca vai existir um utilizador que não está associado a um aluno”. Com a estrutura atual, o MySQL não consegue garantir isso, porque a FK aponta de aluno para utilizador e não o contrário. A solução limpa é inverter a ligação:
 
 utilizador passa a ter id_aluno INT NULL UNIQUE e, com FK para aluno.
 Junta CHECK (id_aluno IS NULL), para ter exatamente um dos dois.
