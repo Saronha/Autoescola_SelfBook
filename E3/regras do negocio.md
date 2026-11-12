@@ -33,7 +33,7 @@ Do **UTILIZADOR** importa guardar email e senha (hash). Utilizadores podem ter o
 
 Um utilizador corresponde a um único aluno/admin e um aluno/admin corresponde a um único utilizador. um aluno não pode ter permissões de admin e vice versa. 
 
-Na escola podem existir alunos e admins que ainda não são utilziadores. mas nunca vai existir um utilizador que não está associado à um aluno ou a um admin.
+Todo aluno é obrigatoriamente utilizador: a conta (email e senha) é criada no momento da inscrição, em simultâneo com o registo do aluno, por isso nunca existe um aluno sem utilizador. E nunca vai existir um utilizador que não está associado à um aluno ou a um admin.
 
 Os utilziadores fazem login com email e senha (No protótipo estava login com google, porém mudamos de ideia pois não parece fazer muito sentido um admin fazer login com sua conta pessoal do google.).
 
@@ -66,3 +66,4 @@ Entretanto, depois de pedirmos aconselhamento do professor,decidimos por omitir 
 9- O admin deve conseguir visulaizar e modificar a escala te todos os instrutores, separados por unidades de ensino.
 
 10- O admin deve alterar o horário dos instrutores com no mínimo 24h de antecedencia.
+
