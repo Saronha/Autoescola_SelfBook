@@ -66,13 +66,3 @@ Entretanto, depois de pedirmos aconselhamento do professor,decidimos por omitir 
 9- O admin deve conseguir visulaizar e modificar a escala te todos os instrutores, separados por unidades de ensino.
 
 10- O admin deve alterar o horário dos instrutores com no mínimo 24h de antecedencia.
-
-# MUDAR RELACIONAMENTO ENTRE USUARIO E ALUNO!!
-
-4. Atualmente pode existir um utilizador sem aluno. A regra diz “nunca vai existir um utilizador que não está associado a um aluno”. Com a estrutura atual, o MySQL não consegue garantir isso, porque a FK aponta de aluno para utilizador e não o contrário. A solução limpa é inverter a ligação:
-
-utilizador passa a ter id_aluno INT NULL UNIQUE e, com FK para aluno.
-Junta CHECK (id_aluno IS NULL), para ter exatamente um dos dois.
-Deixam de ser precisos tipo_utilizador e os id_tipo_utilizador em aluno.
-
-Assim também fica garantido que um aluno não tem permissões de admin e vice-versa. Se preferires manter a estrutura atual, tens de documentar que essa regra fica a cargo da aplicação.
